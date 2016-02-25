@@ -2,7 +2,7 @@
 count = 0
 memoria = 0
 M = False
-while count < 10:
+while count < 3:
     operador = input("digite o operador (+, -, *, /, M ) :\n")
     if operador == "+":
         if M:

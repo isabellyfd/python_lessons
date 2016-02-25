@@ -63,7 +63,7 @@ while countDown > 0:
               
         countDown -= 1
     else:
-        countDown = 0
+        countDown =0
 
 done = flag1 and flag2
         
