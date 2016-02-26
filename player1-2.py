@@ -10,12 +10,15 @@ spaces = "\n"* 100
  
 isMajor = "Ruge than the major number"
 isMinor = "Small than the minor number"
-middleman = "its in the middle, man"
+iddleman = "its in the middle, man"
+
 countDown = 3
 flag1 = False
 flag2 = False
+
 print(spaces)
 
+acertou = 0
 maior = 0
 menor = 0
 if number1 > number2:
@@ -37,8 +40,9 @@ while countDown > 0:
             print ("Please, enter a number between 0 and 100, inclusive")
             guess = int(input())
             
-        
-        if (guess < (menor-maxrange)):
+        if acertou == guess:
+            print("You guessed already!") 
+        elif (guess < (menor-maxrange)):
             countDown = 0
         elif (guess > (maior+maxrange)):
             countDown = 0
@@ -57,9 +61,11 @@ while countDown > 0:
         elif menor < guess < maior:
             print (middleman)
         elif guess == menor:
+	        acertou = guess
             flag1 = True
         elif guess == maior:
             flag2 = True
+            acertou = guess
               
         countDown -= 1
     else:
