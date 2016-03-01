@@ -17,9 +17,9 @@ while(number > 0 and (not flag_count) and (not flag_negcount)):
     number -= 1
 
 if flag_count:
-    print("Existe raiz cubica exata positiva " + count-1)
+    print("Existe raiz cubica exata positiva", count-1)
 elif flag_negcount:
-    print("Existe raiz cubica exata negativa " + neg_count+1)
+    print("Existe raiz cubica exata negativa",  neg_count+1)
 else:
     print ("No ecsisten")    
  

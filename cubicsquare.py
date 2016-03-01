@@ -22,4 +22,3 @@ elif flag_negcount:
     print("Existe raiz cubica exata negativa",  neg_count+1)
 else:
     print ("No ecsisten")    
- 
