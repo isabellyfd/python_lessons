@@ -37,11 +37,15 @@ class Application():
         self.palavra = ""
         self.tentativa = ""
         self.string = ""
+        self.errors = 6
         
     def cadastrar(self):
         self.palavra = self.varPalavra.get()
         self.varPalavra.set("")
         self.string = " ".join(["_"]*len(self.palavra))
+        self.show()
+     
+    def show(self):
         self.mostrar = Label(self.root, text=self.string, font="Bodini 24", justify=CENTER)
         self.mostrar.pack()
         
@@ -57,8 +61,27 @@ class Application():
             self.testar()      
     
     def testar(self):
-        return None
-        
+        count = 0
+        done = False
+        '''while(count < len(self.palavra)):
+            if self.palavra[count] == self.tentativa:
+                iterar = 0
+                string  = ""
+                
+                while(iterar < len(self.string)):
+                    if self.string[iterar] != " ":
+                        if iterar==2*count: 
+                            string = string + self.tentativa
+                        else:
+                            string = string + self.string[iterar]
+                    else:
+                        string = string + self.string[iterar]
+                    iterar += 1
+                self.string = string
+                count +=1        
+        '''
+        self.show()
+   
 root = Tk()
 app = Application(root)
 root.mainloop()
