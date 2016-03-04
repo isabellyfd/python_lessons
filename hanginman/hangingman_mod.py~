@@ -5,12 +5,13 @@ import tkinter.messagebox
 class Application():
 
     def __init__(self, root):
-        root.title("Game - Hangin man")
+        self.root = root
+        self.root.title("Game - Hangin' man")
         #frame superior
         self.topFrame = Frame(root,width=600, height=400, bg="white")
         self.topFrame.pack()
         #inificalizando widgets
-        self.nameGame = Label(self.topFrame, text="Hangin Man", font="Bodini 24", bg="white")
+        self.nameGame = Label(root, text="Hangin Man", font="Bodini 24", bg="white")
         self.nameGame.place(x=200, y=10)
         #frame inferior
         self.bottomFrame = Frame (root, width=600, height=200)
@@ -35,17 +36,19 @@ class Application():
         self.buttonTentativa.grid(row=1, column=2)
         self.palavra = ""
         self.tentativa = ""
+        self.string = ""
         
     def cadastrar(self):
         self.palavra = self.varPalavra.get()
         self.varPalavra.set("")
-        print(self.palavra)
-        
+        self.string = " ".join(["_"]*len(self.palavra))
+        self.mostrar = Label(self.root, text=self.string, font="Bodini 24", justify=CENTER)
+        self.mostrar.place(y= 300, x= (600/30*len(self.palavra)))
         
     def tentar(self):
         self.tentativa = self.varLetra.get()
         self.varLetra.set("")
-        
+ 
         if(not self.tentativa.isalpha()) or (len(self.tentativa) > 1):
             tkinter.messagebox.showinfo('ErOOOOU','Digite apenas uma letra')
             self.tentativa =  self.varLetra.get()
@@ -55,6 +58,7 @@ class Application():
     
     def testar(self):
         return None
+        
 root = Tk()
 app = Application(root)
 root.mainloop()
