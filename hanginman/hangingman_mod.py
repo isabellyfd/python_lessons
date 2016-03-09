@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 from tkinter import *
+import time
+
 import tkinter.messagebox
 class Application():
 
@@ -38,9 +40,14 @@ class Application():
         self.tentativa = ""
         self.string = ""
         self.errors = 6
-        
+        self.tentativasErradas = []
+        self.tentativas = []
+        self.photo = PhotoImage(file="img/img"+str(self.errors)+".gif")
+        self.labelPhoto = Label (self.topFrame, image= self.photo)
+        self.labelPhoto.pack()
+
     def cadastrar(self):
-        self.palavra = self.varPalavra.get()
+        self.palavra = self.varPalavra.get().lower()
         self.varPalavra.set("")
         self.string = " ".join(["_"]*len(self.palavra))
         self.show()
@@ -50,37 +57,64 @@ class Application():
         self.mostrar.pack()
         
     def tentar(self):
-        self.tentativa = self.varLetra.get()
+        
+        self.tentativa = self.varLetra.get().lower()
         self.varLetra.set("")
- 
-        if(not self.tentativa.isalpha()) or (len(self.tentativa) > 1):
-            tkinter.messagebox.showinfo('ErOOOOU','Digite apenas uma letra')
-            self.tentativa =  self.varLetra.get()
+        print(self.tentativas)
+        if self.tentativa in self.tentativas:
+            tkinter.messagebox.showinfo('ErOOOOU', 'Voce ja tentou essa letra')
+            self.tentativa = self.varLetra.get()
             self.varLetra.set("")
         else:
-            self.testar()      
+            if(not self.tentativa.isalpha()) or (len(self.tentativa) > 1):
+                tkinter.messagebox.showinfo('ErOOOOU','Digite apenas uma letra')
+                self.tentativa =  self.varLetra.get()
+                self.varLetra.set("")
+            else:
+                self.tentativas.append(self.tentativa)
+                self.testar()      
     
     def testar(self):
         count = 0
-        done = False
-        '''while(count < len(self.palavra)):
-            if self.palavra[count] == self.tentativa:
-                iterar = 0
-                string  = ""
-                
-                while(iterar < len(self.string)):
-                    if self.string[iterar] != " ":
-                        if iterar==2*count: 
-                            string = string + self.tentativa
-                        else:
-                            string = string + self.string[iterar]
-                    else:
-                        string = string + self.string[iterar]
-                    iterar += 1
-                self.string = string
-                count +=1        
-        '''
-        self.show()
+        posicoes = []
+        #pega todos os incides que tem a tentativa na palavra 
+        while count < len(self.palavra):
+            if self.tentativa == self.palavra[count]:
+                posicoes.append(count)
+            count += 1
+        
+        count = 0
+        #print (posicoes)
+        if len(posicoes) > 0:
+            self.string = self.string.split()
+            for pos in posicoes:
+                self.string[pos] = self.tentativa.upper()
+            print(''.join(self.string))
+            if "".join(self.string).lower() == self.palavra:
+                self.string = " ".join(self.string)
+                self.mostrar['text'] = self.string
+                tkinter.messagebox.showinfo('Parabeins', 'Bicha, a senhora eh destruidora meshmo' )
+                time.sleep(3)
+                self.string = ""
+                self.mostrar['text'] = self.string
+            else:
+                self.string = " ".join(self.string)
+                self.mostrar['text'] = self.string
+                    
+        else:
+            #print('hiiiii')
+            self.errors -= 1
+            self.tentativasErradas.append(self.tentativa)
+            self.photo['file'] = "img/img"+str(self.errors)+".gif"
+            
+            if self.errors == 0:
+                tkinter.messagebox.showinfo('Eira', 'Suas chances abaram!!! A palavra era:' +str(self.palavra))
+                self.string = ""
+                self.mostrar['text'] = self.string
+            else:
+                tkinter.messagebox.showinfo('ErOOOOU','Mano, vc digitou um letra cabrosa, agora vc tem '+str(self.errors)+" chances")
+                tkinter.messagebox.showinfo('Aviso', 'Voce ja tentou e errou essas letras: '+ ' '.join(self.tentativasErradas))
+        #self.show()
    
 root = Tk()
 app = Application(root)
